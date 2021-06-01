@@ -18,10 +18,10 @@ namespace Sand
         public static void Grain()
         {
 
-            for (int i = 1; i < 5; i++)
+            for (int i = 1; i < Location.Drop; i++)
             {
 
-                Location.Check = Location.Random.Next(Program.Display.FrameChar.Count);
+                Location.Check = Location.Random.Next(300);//Program.Display.FrameChar.Count);
 
                 if (Program.Display.FrameChar[Location.Check] == " ")
                 {
