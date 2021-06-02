@@ -24,10 +24,7 @@ namespace Sand
 
                     case ConsoleKey.LeftArrow:
                     case ConsoleKey.A:
-                        if (Display.Offset > -1)
-                        {
-                            Display.Offset--;
-                        }
+                        Display.Offset--;
                         break;
 
                     case ConsoleKey.DownArrow:
@@ -37,20 +34,12 @@ namespace Sand
 
                     case ConsoleKey.RightArrow:
                     case ConsoleKey.D:
-                        if (Display.Offset < 1)
-                        {
-                            Display.Offset++;
-                        }
+                        Display.Offset++;
                         break;
 
                     case ConsoleKey.Delete:
-                        for (int i = Display.FrameChar.Count - 1; i >= 0; i--)
-                        {
-                            if (Display.FrameChar[i] == "*")
-                            {
-                                Display.FrameChar[i] = " ";
-                            }
-                        }
+
+                        Reset.Now();
                         break;
 
                     case ConsoleKey.Q:

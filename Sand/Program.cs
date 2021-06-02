@@ -17,6 +17,7 @@ namespace Sand
             public static Random Random { get; set; } = new Random();
             public static ConsoleColor Color { get; set; } = ConsoleColor.Yellow;
             public static int Offset { get; set; } = 0;
+            public static int Width { get; set; } = 0;
         }
 
         static void Main(string[] args)
@@ -26,8 +27,6 @@ namespace Sand
             {
                 Console.SetWindowSize(60, 40);
             }
-
-            
 
             //Start Thred to Read Keypress
             Task.Factory.StartNew(() => Key.Press());
@@ -39,37 +38,39 @@ namespace Sand
 
             //Set the Values for Movement Calculations
             string[] Lines = Display.FrameString.ToString().Split((Char)10);
-            int Width = Lines[0].Length + 1;
+            Display.Width = Lines[0].Length + 1;
 
-            //int Offset = 0;
-            int Sleep = 200;
-
+            Obstacle.Create();
+            
             do
             {
                 Pour.Grain();
                 Console.ForegroundColor = Display.Color;
 
-                if (Sleep > 5) { Sleep--; }
-
-                for (int i = Program.Display.FrameChar.Count -1; i >= 0; i--)
+                for (int i = Display.FrameChar.Count -1; i >= 0; i--)
                 {
-
-                    if (Program.Display.FrameChar[i] == "*" && ((i + Width + Display.Offset) < Program.Display.FrameChar.Count))
+                    if (((i + Display.Width + Display.Offset -1) > 0) && ((i + Display.Width + Display.Offset + 1) < Display.FrameChar.Count))
                     {
-                        if(Program.Display.FrameChar[i + (Width + Display.Offset)] == " ")
+                        if (Display.FrameChar[i] == "*")
                         {
-                            Program.Display.FrameChar[i] = " ";
-                            Program.Display.FrameChar[i + (Width + Display.Offset)] = "*";
-                        }
-                        else if (Program.Display.FrameChar[i + (Width + Display.Offset) + 1] == " ")
-                        {
-                            Program.Display.FrameChar[i] = " ";
-                            Program.Display.FrameChar[i + (Width + Display.Offset) + 1] = "*";
-                        }
-                        else if (Program.Display.FrameChar[i + (Width + Display.Offset) - 1] == " ")
-                        {
-                            Program.Display.FrameChar[i] = " ";
-                            Program.Display.FrameChar[i + (Width + Display.Offset) - 1] = "*";
+                            Display.FrameChar[i] = " ";
+
+                            if (Display.FrameChar[i + (Display.Width + Display.Offset)] == " ")
+                            {
+                                Display.FrameChar[i + (Display.Width + Display.Offset)] = "*";
+                            }
+                            else if (Display.FrameChar[i + (Display.Width + Display.Offset) + 1] == " ")
+                            {
+                                Display.FrameChar[i + (Display.Width + Display.Offset) + 1] = "*";
+                            }
+                            else if (Display.FrameChar[i + (Display.Width + Display.Offset) - 1] == " ")
+                            {
+                                Display.FrameChar[i + (Display.Width + Display.Offset) - 1] = "*";
+                            }
+                            else
+                            {
+                                Display.FrameChar[i] = "*";
+                            }
                         }
                     }
 
